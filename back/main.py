@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, Query
-from fastapi.middleware.cors import CORSMiddleware  # Importe CORSMiddleware aqui
+from fastapi.middleware.cors import CORSMiddleware  
 from pydantic import BaseModel
 from datetime import date
 from typing import Optional
@@ -7,13 +7,10 @@ import asyncpg
 import os
 from dotenv import load_dotenv
 
-# Carrega variáveis de ambiente
 load_dotenv()
 
-# Cria a aplicação FastAPI
 app = FastAPI()
 
-# Configuração CORS - agora CORSMiddleware está disponível
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # URL do frontend
@@ -26,11 +23,10 @@ class Transaction(BaseModel):
     id: int | None = None
     description: str
     amount: float
-    type: str  # 'income' ou 'expense'
+    type: str  
     date: date
     category: str | None = None
 
-# Pool de conexões global
 pool = None
 
 @app.on_event("startup")
